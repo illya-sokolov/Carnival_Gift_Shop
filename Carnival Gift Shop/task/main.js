@@ -30,7 +30,6 @@ let items = [
     {id: 10, name: "Scary Mask", cost: 75}
 ];
 
-
 let tickets = 0;
 let yourChoice;
 while (true) {
@@ -38,12 +37,33 @@ while (true) {
 1-Buy a gift 2-Add tickets 3-Check tickets 4-Show gifts 5-Exit the shop`);
 
     yourChoice = Number(input());
+    if (yourChoice > 5 || yourChoice < 1 || isNaN(yourChoice)) {
+        console.log('Please enter a valid number!');
+        continue;
+    }
+
     if (yourChoice == 1) {
+        if (items === undefined || items.length == 0) {
+            console.log('Wow! There are no gifts to buy.');
+            continue;
+        }
+
         console.log('Enter the number of the gift you want to get:');
         let yourPresent = Number(input());
+        if (isNaN(yourPresent)) {
+            console.log('Please enter a valid number!');
+            continue;
+        }
         let yourItem = items.find(item => item.id === yourPresent);
+        if (yourItem === undefined || yourPresent < 1 || yourPresent > 10) {
+            console.log('There is no gift with that number!');
+            continue;
+        }
+        if (tickets - yourItem.cost < 0) {
+            console.log('You don\'t have enough tickets to buy this gift.');
+            continue;
+        }
         console.log(`Here you go, one ${yourItem.name}!`)
-
         tickets -= yourItem.cost;
         items.splice(items.indexOf(yourItem), 1);
         console.log(`Total tickets: ${tickets}`);
@@ -52,6 +72,10 @@ while (true) {
     if (yourChoice == 2) {
         console.log(`Enter the ticket amount:`);
         let numberTickets = Number(input());
+        if (isNaN(numberTickets) || numberTickets < 0 || numberTickets > 1000) {
+            console.log('Please enter a valid number between 0 and 1000.');
+            continue;
+        }
         tickets += numberTickets;
         console.log(`Total tickets: ${tickets}`);
     }
@@ -60,6 +84,10 @@ while (true) {
     }
     if (yourChoice == 4) {
         console.log("Here's the list of gifts:\n");
+        if (items === undefined || items.length == 0) {
+            console.log('Wow! There are no gifts to buy.');
+            continue;
+        }
         for (let item of items) {
             console.log(`${item.id}- ${item.name}, Cost: ${item.cost} tickets`);
 
