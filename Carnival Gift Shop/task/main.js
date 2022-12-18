@@ -15,50 +15,62 @@ Here's the list of gifts:
 9- Basketball, Cost: 20 tickets
 10- Scary Mask, Cost: 75 tickets`);
 
-console.log(`What do you want to do?
-1-Buy a gift 2-Add tickets 3-Check tickets 4-Show gifts`);
+
 const GREETING = `Have a nice day!`;
-const items = [
-    {name: "Teddy Bear", cost: 10},
-    {name: "Big Red Ball", cost: 5},
-    {name: "Huge Bear", cost: 50},
-    {name: "Candy", cost: 8},
-    {name: "Stuffed Tiger", cost: 15},
-    {name: "Stuffed Dragon", cost: 30},
-    {name: "Skateboard", cost: 100},
-    {name: "Toy Car", cost: 25},
-    {name: "Basketball", cost: 20},
-    {name: "Scary Mask", cost: 75}
+let items = [
+    {id: 1, name: "Teddy Bear", cost: 10},
+    {id: 2, name: "Big Red Ball", cost: 5},
+    {id: 3, name: "Huge Bear", cost: 50},
+    {id: 4, name: "Candy", cost: 8},
+    {id: 5, name: "Stuffed Tiger", cost: 15},
+    {id: 6, name: "Stuffed Dragon", cost: 30},
+    {id: 7, name: "Skateboard", cost: 100},
+    {id: 8, name: "Toy Car", cost: 25},
+    {id: 9, name: "Basketball", cost: 20},
+    {id: 10, name: "Scary Mask", cost: 75}
 ];
 
-let tickets = 100;
-let yourChoice = Number(input());
-if (yourChoice == 1) {
-    console.log('Enter the number of the gift you want to get:');
-    let yourPresent = Number(input());
-    console.log(`Here you go, one ${items[yourPresent - 1].name}!`)
-    console.log(`Total tickets: ${tickets - items[yourPresent - 1].cost}`);
-    console.log(GREETING);
-}
-else if (yourChoice == 2) {
-    console.log(`Enter the ticket amount:`);
-    let numberTickets = Number(input());
-    console.log(`Total tickets: ${tickets + numberTickets}`);
-    console.log(GREETING);
-}
-else if (yourChoice == 3) {
-    console.log(`Total tickets: ${tickets}`);
-    console.log(GREETING);
-}
-else if (yourChoice == 4) {
-    console.log("Here's the list of gifts:\n");
-    for (let i = 0; i < items.length; i++) {
-        console.log(`${i+1}- ${items[i].name}, Cost: ${items[i].cost} tickets`);
+
+let tickets = 0;
+let yourChoice;
+while (true) {
+    console.log(`\nWhat do you want to do?
+1-Buy a gift 2-Add tickets 3-Check tickets 4-Show gifts 5-Exit the shop`);
+
+    yourChoice = Number(input());
+    if (yourChoice == 1) {
+        console.log('Enter the number of the gift you want to get:');
+        let yourPresent = Number(input());
+        let yourItem = items.find(item => item.id === yourPresent);
+        console.log(`Here you go, one ${yourItem.name}!`)
+
+        tickets -= yourItem.cost;
+        items.splice(items.indexOf(yourItem), 1);
+        console.log(`Total tickets: ${tickets}`);
+
     }
-    console.log(GREETING);
-} else {
-    return;
+    if (yourChoice == 2) {
+        console.log(`Enter the ticket amount:`);
+        let numberTickets = Number(input());
+        tickets += numberTickets;
+        console.log(`Total tickets: ${tickets}`);
+    }
+    if (yourChoice == 3) {
+        console.log(`Total tickets: ${tickets}`);
+    }
+    if (yourChoice == 4) {
+        console.log("Here's the list of gifts:\n");
+        for (let item of items) {
+            console.log(`${item.id}- ${item.name}, Cost: ${item.cost} tickets`);
+
+        }
+    }
+    if (yourChoice == 5) {
+        console.log(GREETING)
+        break;
+    }
 }
+
 
 
 
